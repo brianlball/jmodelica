@@ -101,7 +101,7 @@ RUN svn export https://svn.jmodelica.org/trunk "/tmp/JModelica" \
     && cd "/tmp/JModelica" \
     && mkdir build \
     && cd build \
-    && ../configure --prefix="$BUILD_DIR/JModelica" --with-ipopt="$BUILD_DIR/Ipopt" \
+    && ../configure --prefix="/usr/local/JModelica" --with-ipopt="/usr/local/Ipopt" \
     && make -j$(nproc)\
     && make install \
     && make casadi_interface
