@@ -90,7 +90,7 @@ RUN cd /tmp/Ipopt \
     && ./get.Metis \
     && cd "/tmp/Ipopt/Ipopt-${IPOPT_VERSION}" \
     && ./configure --prefix="$BUILD_DIR/Ipopt" \
-    && make \
+    && make -j$(nproc)\
     && make install
 
 # build and install JModelica
@@ -102,7 +102,7 @@ RUN svn export https://svn.jmodelica.org/trunk "/tmp/JModelica" \
     && mkdir build \
     && cd build \
     && ../configure --prefix="$BUILD_DIR/JModelica" --with-ipopt="$BUILD_DIR/Ipopt" \
-    && make \
+    && make -j$(nproc)\
     && make install \
     && make casadi_interface
 
