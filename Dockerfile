@@ -89,7 +89,7 @@ RUN cd /tmp/Ipopt \
     && cd "/tmp/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Metis" \
     && ./get.Metis \
     && cd "/tmp/Ipopt/Ipopt-${IPOPT_VERSION}" \
-    && ./configure --prefix="$BUILD_DIR/Ipopt" \
+    && ./configure --prefix="/usr/local/Ipopt" \
     && make -j$(nproc)\
     && make install
 
