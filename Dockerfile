@@ -18,7 +18,7 @@ ENV SEPARATE_PROCESS_JVM="$JAVA_HOME"
 
 # add tmp and build dirs
 RUN mkdir -p "/tmp" \
-    && mkdir -p "/tmp/Ipopt" \
+    && mkdir -p "/usr/local/src/Ipopt" \
     && mkdir -p "/usr/local/" \
     && mkdir -p "/usr/local/Ipopt"
 
@@ -76,29 +76,29 @@ RUN pip install simulatortofmu tzwhere ipykernel jupyterlab
 #    pip install --upgrade jcc
 
 # wget and build Ipopt
-RUN cd /tmp/Ipopt \
+RUN cd /usr/local/src/Ipopt \
 #    && wget http://www.coin-or.org/download/source/Ipopt/Ipopt-${IPOPT_VERSION}.tgz --no-check-certificate \
     && wget http://www.coin-or.org/download/source/Ipopt/Ipopt-${IPOPT_VERSION}.tgz \
     && tar xvf Ipopt-${IPOPT_VERSION}.tgz \
-    && cd "/tmp/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Blas" \
+    && cd "/usr/local/src/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Blas" \
     && ./get.Blas \
-    && cd "/tmp/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Lapack" \
+    && cd "/usr/local/src/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Lapack" \
     && ./get.Lapack \
-    && cd "/tmp/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Mumps" \
+    && cd "/usr/local/src/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Mumps" \
     && ./get.Mumps \
-    && cd "/tmp/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Metis" \
+    && cd "/usr/local/src/Ipopt/Ipopt-${IPOPT_VERSION}/ThirdParty/Metis" \
     && ./get.Metis \
-    && cd "/tmp/Ipopt/Ipopt-${IPOPT_VERSION}" \
+    && cd "/usr/local/src/Ipopt/Ipopt-${IPOPT_VERSION}" \
     && ./configure --prefix="/usr/local/Ipopt" \
     && make -j$(nproc)\
     && make install
 
 # build and install JModelica
-RUN svn export https://svn.jmodelica.org/trunk "/tmp/JModelica" \
-#    cd /tmp/JModelica/external && \
-#    rm -rf /tmp/JModelica/external/Assimulo && \
+RUN svn export https://svn.jmodelica.org/trunk "/usr/local/src/JModelica" \
+#    cd /usr/local/src/JModelica/external && \
+#    rm -rf /usr/local/src/JModelica/external/Assimulo && \
 #    svn export https://svn.jmodelica.org/assimulo/trunk Assimulo && \
-    && cd "/tmp/JModelica" \
+    && cd "/usr/local/src/JModelica" \
     && mkdir build \
     && cd build \
     && ../configure --prefix="/usr/local/JModelica" --with-ipopt="/usr/local/Ipopt" \
